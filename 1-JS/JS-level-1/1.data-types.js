@@ -1,5 +1,5 @@
 
-
+//-------------------------------------------
 /*
     data-types
         1. simple / primitive  ==> values
@@ -26,6 +26,7 @@ var multiLineTemplate = `
         <h1>${new Date().toTimeString()}</h1>
     </div>
 `;
+
 // ---------------------------------------------------------
 // b. number
 var count = 12;
@@ -33,6 +34,7 @@ var cost = 12.12;
 // ---------------------------------------------------------
 // c. boolean
 var found = true;
+
 // imp-note :
 /*
     falsy values : ==> false,0,"",null,undefined,NAN
@@ -68,7 +70,6 @@ var v;
 // config.httpMethod="GET";
 // config.onSuccess=function(){
 //     console.log('im running on success');
-
 // }
 // delete config.httpMethod;
 
@@ -83,7 +84,6 @@ config.url = "http://"
 config.httpMethod = "GET";
 config.onSuccess = function () {
     console.log('im running on success');
-
 }
 // or ( literal style )
 
@@ -112,37 +112,37 @@ var newAdharPattern = /\d{4}-\d{4}-\d{4}/;
 // ---------------------------------------------------------
 // c. Function
 
-var add = new Function("n1", "n2", "var r=n1+n2;return r;")
-// or
+// var add = new Function("n1", "n2", "var r=n1+n2;return r;")
+// // or
 function add(n1, n2) {
     var r = n1 + n2; return r;
 }
-// ---------------------------------------------------------
+//---------------------------------------------------------
 
 // How to access obj's properties ?
 /*
     in 2 ways
-    -> . notation , if propert is valid indenfier
+    -> . notation , if property is valid indenfier
     else
     -> [] notation
 */
 
-// var person = {
-//     name: 'Nag',
-//     age: 34,
-//     'home-address': 'chennai'
-// };
+var person = {
+    name: 'Nag',
+    age: 34,
+    'home-address': 'chennai'
+};
 
-// person.name = "Nag N";
-// console.log(person.name);
+person.name = "Nag N";
+console.log(person.name);
 
-// person['home-address'] = 'bengalore';
-// console.log(person["home-address"]);
+person['home-address'] = 'bengalore';
+console.log(person["home-address"]);
 
 
-// var o = {
-//     1: 'one',
-//     100: 'hundred'
-// }
+var o = {
+    1: 'one',
+    100: 'hundred'
+}
 
-// console.log(o[100]);
+console.log(o[100]);

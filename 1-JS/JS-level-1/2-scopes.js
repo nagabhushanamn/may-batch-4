@@ -1,5 +1,7 @@
 "use strict"
 
+
+
 /*
 
     scope / execution-context
@@ -32,6 +34,7 @@
 
 // var v = 12
 // function f1() {
+    "use strict"
 //     console.log(v);
 //     var v=13;
 // }
@@ -43,7 +46,6 @@
 // var v = 12;
 // function f1() {
 //     function f2() {
-//         var v = 14;
 //         console.log(v);
 //     }
 //     f2();  // f2-scope <= f1-scope 
@@ -56,7 +58,7 @@
 // var v = 200;
 //---------------------------------------------------
 // var v = 100;
-// if (false) {
+// if (true) {
 //     var v = 200;
 // }
 // console.log(v);
@@ -68,7 +70,7 @@
     => we can re-declare same variable within scope
     => no block-scope
 
-    soln : using 'let' & 'const' keywords from ES6  wit block-scope
+    soln : using 'let' & 'const' keywords from ES6  with block-scope
 
 */
 //---------------------------------------------------
@@ -87,15 +89,15 @@
 // const v = 100;
 // v = 200;
 //---------------------------------------------------
-// const person = {
-//     name: 'Nag',
-//     age: 34
-// }
+const person = {
+    name: 'Nag',
+    age: 34
+}
 
-// person.name = "Nag N";
-// person.age = 35
+person.name = "Nag N";
+person.age = 35
 
-// person={};
+// person={}; // error
 //---------------------------------------------------
 // summary
 /*
@@ -110,11 +112,11 @@
 
 // Quiz
 
-// function func() {
-//      v = 100;
-// }
-// func();
+function func() {
+     v = 100;
+}
+func();
 
-// console.log(v);
+console.log(v);
 
 //---------------------------------------------------

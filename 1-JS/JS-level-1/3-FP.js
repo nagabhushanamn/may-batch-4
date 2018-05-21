@@ -5,14 +5,14 @@
 // how to create function in .js-language ?
 
 /*
-// 1. function declaration
-        => Name function
+// 1. function-declaration
+        => Named function
         => function-obj created at scope-creation phase
         => always get hoist with function-obj
-// 2. function expression
+// 2. function-expression
         => anonymous function
         => function-obj created at scope-execution phase
-        => we can invoke function-expression
+        => we can invoke after function-expression
 */
 
 //----------------------------------------------------
@@ -28,9 +28,8 @@
 //----------------------------------------------------
 
 // 2. function expression
-
 // console.log(add(12, 13)) // error
-// var add = function (n1, n2) {
+// let add = function(n1, n2) {
 //     return n1 + n2;
 // }
 // console.log(add(12, 13))
@@ -58,6 +57,10 @@
 
 //----------------------------------------------------
 /*
+
+ FP principles
+ -------------------
+
     Functions as Values
         - STORE functions in variables
         - PASS functions in parameters
@@ -73,6 +76,7 @@
 // }
 // let sayHello = greet;
 // sayHello();
+// greet();
 
 //----------------------------------------------------
 
@@ -104,7 +108,7 @@
 //     let doLearn = function () {
 //         console.log('learning .js');
 //     }
-//     //doLearn();
+//     // doLearn();
 //     return doLearn;
 // }
 
@@ -157,7 +161,7 @@
 
 // ES6 : function with default-params
 
-// function func(a = 1, b = 2) {
+// function func(a=1, b=2) {
 
 //     // if (!a) a = 1;
 //     // if (!b) b = 2;
@@ -185,31 +189,28 @@
 
 //----------------------------------------------------
 
+
 //----------------------------------------------------
 // closures
-
 /*
-    A closure is a function having access to the parent scope,
+    A closure is a function having access
+    to the parent scope,
     even after the parent function has closed.
 */
 //----------------------------------------------------
-
-
 // function teach(sub) {
 //     console.log('teaching ' + sub);
 //     let notes = sub + "-notes";
-//     let fun = "bla bla bla";
+//     let fun='bla bla bla';
 //     function learn() {
 //         console.log('learning with ' + notes);
 //     }
+//     // learn();
 //     console.log('teaching end..');
-//     //return learn;
+//     return learn;
 // }
-
-
-// let learnFunc = teach('.js') // teach-scope with args & local
+// let learnFunc=teach('.js') // teach-scope with args & local
 // learnFunc();
-
 
 //----------------------------------------------------
 
@@ -234,7 +235,7 @@
         - getCount()
 
 */
-
+// self-executable function / IIFE pattern
 // const counter = (function () {
 //     let count = 0;  // private
 //     // public
@@ -247,7 +248,7 @@
 //     return {
 //         inc: doCount,
 //         get: getCount
-//     };
+//     }
 // })();
 
 
@@ -262,31 +263,34 @@
 
 //----------------------------------------------------
 // 1. static function-binding
+//----------------------------------------------------
 
 // function sayNameForAll() {
-//     // console.dir(this);
+//     console.log(this);
 //     console.log('im ' + this.name);
 // }
 // let p1 = {
 //     name: 'Nag',
-//     sayName: sayNameForAll // static function-binding
-// }
-// let p2 = {
-//     name: 'cgi',
 //     sayName: sayNameForAll
-// }
-// // sayNameForAll(); // this ==> undefined
-// p1.sayName(); // im Nag
-// p2.sayName(); // im cgi
+// };
+// let p2 = {
+//     name: 'Ria',
+//     sayName: sayNameForAll
+// };
+// // sayNameForAll();// Error
+// p1.sayName();
+// p2.sayName();
+
+
+
 //----------------------------------------------------
 
 // b. dynamic function-binding
 // let p = { name: 'Nag' }
-// let e = { name: 'cgi' }
+// let e = { name: 'ibm' }
 
 
 // let greetLib = {
-//     name: 'greet-lib',
 //     sayName: function (message, from) {
 //         console.log(message + ' im ' + this.name + " : " + from);
 //     }
@@ -311,11 +315,30 @@
 
 //--------------------------------------------------
 
+// function customBind(fn, obj) {
+//     return function () {
+//         fn.call(obj);
+//     }
+// }
+
+// let p = { name: 'Nag' }
+// let sayName = function () {
+//     console.log('im ' + this.name);
+// }
+
+// let newF = customBind(sayName, p);
+// newF();
+
+//---------------------------------------------------
+
 /*
+
+ summary
+ ---------
 
     in .js-lang , we can invoke functions in 3 ways
 
-    1. function-invocation
+    1. function-invocation ( without any object )
         'this' ==> undefined ( in strict-mode ) ||  window ( in non-strict-mode )
     2. method-invocation ( static-function-binding) 
         'this' ==> invoker object
@@ -323,6 +346,20 @@
         'this' => arg-object
 
 */
+
+//--------------------------------------------------
+
+// function myFunction() {
+//     console.log(this);
+// }
+// myFunction();  // function-invocation
+
+// let obj = { name: 'A', myFunction: myFunction }; // static function-binding
+// obj.myFunction();
+
+// let obj2 = { name: 'B' }
+// let obj2MyFunction = myFunction.bind(obj2); // dynamic function-binding
+// obj2MyFunction();
 
 //--------------------------------------------------
 
@@ -342,6 +379,33 @@
 // person = { pName: 'Ria', sayName: function () { console.log('im..') } }
 
 // oldPerson.sayName();
+
+//--------------------------------------------------
+
+
+// let emp = { name: 'IBM' };
+
+// let trainer = {
+//     name: 'Nag',
+//     doTeach: function () {
+//         console.log(this.name + " teaching .js");
+//         let self = this;
+//         let doLearn = function () {
+//             console.log(this.name + " learning .js from " + self.name);
+//         }
+//         console.log('teaching end..');
+//         return doLearn;
+//     }
+// }
+// // week-1
+// let learnFunc = trainer.doTeach();
+// //learnFunc(); // error
+// learnFunc.call(emp);
+
+// // week-2
+// let tempTrainer = { name: 'Praveen' }
+// learnFunc = trainer.doTeach.call(tempTrainer);
+// learnFunc.call(emp);
 
 //--------------------------------------------------
 // Quiz

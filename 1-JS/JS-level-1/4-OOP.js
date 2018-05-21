@@ -1,5 +1,4 @@
 
-
 // ES5
 
 // function Person(name, age) {
@@ -12,6 +11,11 @@
 // Person.prototype.sayAge = function () {
 //     console.log('im ' + this.age + " old");
 // }
+
+// let p1 = new Person('Nag', 34);
+// let p2 = new Person('Ria', 3)
+
+
 
 // ES6
 
@@ -49,19 +53,28 @@ class Employee extends Person {
 // let e1 = new Employee('Nag', 33, 1000.00);
 
 class Boss extends Employee {
-
     askForBonus() {
         return this.salary * 0.2 + super.askForBonus();
     }
-
 }
 
 let boss = new Boss('Nag', 33, 1000.00);
 
+//------------------------------------------
 
-class Abc {
+class JSClass {
+    constructor() {
+        this.insvar = 12; // instance var
+    }
+    insMethod() {
+
+    }
     static staMethod() {
-        //...
+
     }
 }
-Abc.staVar = 123;
+JSClass.staVar = 13; // static variables
+
+JSClass.staMethod();
+let obj = new JSClass();
+obj.insMethod();
