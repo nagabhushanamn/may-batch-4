@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import Review from './Review';
+import ReviewForm from './ReviewForm';
 
 class Product extends Component {
     constructor(props) {
         super(props);
-        console.log('Product :: constructor()');
         this.state = {
             currentTab: 1,
             reviews: [
                 { stars: 5, author: 'who@gmail.com', body: 'sample review-1' },
-                { stars: 5, author: 'who@gmail.com', body: 'sample review-2' }
             ]
         }
+    }
+    handleNewReview(review) {
+        let { reviews } = this.state;
+        reviews = reviews.concat(review);
+        this.setState({ reviews });
     }
     changeTab(tab) {
         this.setState({ currentTab: tab });
     }
     renderBuyBtn(product) {
+        let { onBuy } = this.props;
         if (product.canBuy)
-            return <button className="btn btn-primary btn-sm">buy</button>
+            return <button onClick={() => { onBuy(product) }} className="btn btn-primary btn-sm">buy</button>
         else
             return null;
+    }
+    renderReviews() {
+        let { reviews } = this.state;
+        return reviews.map((review, idx) => {
+            return <Review review={review} key={idx} />
+        });
     }
     renderTabPanel(product) {
         let { currentTab } = this.state;
@@ -33,7 +45,13 @@ class Product extends Component {
                 panel = <div>Not yet</div>
                 break;
             case 3:
-                panel = <div>None yet</div>
+                panel = (
+                    <div>
+                        {this.renderReviews()}
+                        <hr />
+                        <ReviewForm onNewReview={(review) => { this.handleNewReview(review) }} />
+                    </div>
+                )
                 break;
             default:
                 panel = null;
@@ -41,7 +59,6 @@ class Product extends Component {
         return panel;
     }
     render() {
-        console.log('Product :: render()');
         let { product } = this.props;
         let { currentTab } = this.state;
         return (

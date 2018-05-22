@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import Product from './Product';
+import ViewCart from './ViewCart';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log('App :: constructor()');
     //state initialization
     this.state = {
+      cart: {}, // {"111":{item,qty}}
       products: [
         {
           code: '111',
@@ -28,21 +29,37 @@ class App extends Component {
       ]
     }
   }
-
+  addToCart(item) {
+    let { cart } = this.state;
+    let code = item.code;
+    let cartLine;
+    if (!cart[code]) {
+      cartLine = { item, qty: 1 }
+    } else {
+      cartLine = cart[code];
+      cartLine = { item, qty: cartLine.qty + 1 }
+    }
+    cart = Object.assign({}, cart, { [code]: cartLine })
+    this.setState({ cart });
+  }
   renderProducts() {
     let { products } = this.state;
     return products.map((product, idx) => {
-      return <Product product={product} key={idx}/>;
+      return <Product onBuy={(item) => { this.addToCart(item) }} product={product} key={idx} />;
     });
   }
   render() {
-    console.log('App :: render()');
     let { title } = this.props;
+    let { cart } = this.state;
     return (
       <div className="container">
         <nav className="navbar navbar-light bg-primary">
           <a className="navbar-brand" href="/#">{title}</a>
         </nav>
+        <hr />
+        {Object.keys(cart).length} item(s) in cart
+        <hr />
+        <ViewCart cart={cart} />
         <hr />
         <div className="list-group">
           {this.renderProducts()}
