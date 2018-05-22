@@ -64,7 +64,7 @@ leve-1 :
 leve-2 :
     - ES6 new-syntax    
     - ES6 new-apis
-    - ES modules
+    - ES modules ( code oraganization )
     - concurrency model using Event-Loop
     - Async apis ( Promise-api & RxJS )
 ------------------------------------------------------------    

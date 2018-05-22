@@ -1,11 +1,11 @@
-
+"use strict"
 
 //-------------------------------------------
 // obj-literal enhancements
 //-------------------------------------------
 // var name = "Nag";
 // var age = 34;
-// var dynamicAddressType = "office"; // office | vacation
+// var dynamicAddressType = "office"; // home | office | vacation
 // //ES5
 // var person1 = {
 //     name: name,
@@ -33,116 +33,214 @@
 
 
 //-------------------------------------------
-// de-structuring  ( extracting props from array/object to variables)
+// de-structuring  ( extracting elements/props from array/object to variables)
 //-------------------------------------------
 
-
-// A. array
+// A. Array
 
 // let nums = [1, 2, 3, 4, 5, [6, 7]];
 
+// manual
 // let n1 = nums[0];
-// let n2 = nums[1];
+// let n2 = nums[1]
 
 // or
-
 // let [n1, n2, n3 = 30, , n5, [n6, n7]] = nums;
 
-
-
 // B. Object
-
 
 // let person = {
 //     name: 'Nag',
 //     age: 34
-// };
-
-// // manual
-
-// // let myName = person.name;
-// // let myAge = person.age;
-
-// // or
-
-// // let { name: myName, age: myAge } = person;
-// // let { name: name, age: age } = person;
-// // or
-// // let { name, age } = person;
-
-// let name;
-// let age;
-
-// //let { name, age } = person; // error , variable already exist
-// ({ name, age } = person);
-
-
-
-//-------------------------------------------
-// Symbol data-type
-//-------------------------------------------
-
-/*
-    unique & immutable value, used as object's indentifier property
-*/
-
-// let javaSymbol = Symbol.for('java');
-// let jsSymbol = Symbol.for('js');
-
-// let e1 = { name: 'A', [javaSymbol]: 'java,spring' }
-// let e2 = { name: 'A', [jsSymbol]: 'js,angular,ember' }
-
-
-// if (e1[javaSymbol]) {
-//     console.log('he is java employee..');
 // }
 
+// // // manual
+// // let myName=person.name;
+// // let myAge=person.age;
 
-//----------------------------------------------------------------------
-// Spread operator
-//----------------------------------------------------------------------
+// // or
 
-// let menu = ['idly', 'vada', 'poori']  // iterable object
-// let newMenu = [...menu, 'dosa'] // spread
-
-// let arr1 = [1, 2, 3];
-// let arr2 = [7, 8, 9];
-// let arr3 = [...arr1, 4, 5, 6, ...arr2]; // spreading
-
-
-// let [m1, m2, , m4] = newMenu  // destructuring
+// let { name: myName, age: myAge } = person;
+// // let { name: name, age: age } = person;
+// // or
+// let { name, age } = person;
 
 
-//----------------------------------------------------------------------
-//Iterable obkects
-//----------------------------------------------------------------------
+//-------------------------------------------
+// spread operator
+//-------------------------------------------
 
-// let idMaker = {
-//     [Symbol.iterator]: function () {
-//         let id = 0;
-//         return {
-//             next: function () {
-//                 id++;
-//                 return { value: id <= 10 ? id : undefined, done: id <= 10 ? false : true }
-//             }
+// function func(a, b, c) {
+//     console.log(a);
+//     console.log(b);
+//     console.log(c)
+// }
+
+// let nums = [10, 20, 30];
+// // func(nums[0], nums[1], nums[2]);
+// // or
+// func(...nums); // spreading
+
+
+// let arr1 = [1, 2, 3]
+// let arr2 = [7, 8, 9]
+// let newArr = [...arr1, 4, 5, 6, ...arr2];
+
+
+//-------------------------------------------
+// Arrow-function
+//-------------------------------------------
+
+// let getPrice = function () {
+//     return 100 + 200;
+// }
+
+// syntax
+
+// let getPrice = () => {
+//     return 100 + 200;
+// }
+
+// let getPrice = (count) => {
+//     return count * (100 + 200);
+// }
+
+// let getPrice = count => {
+//     return count * (100 + 200);
+// }
+
+// let getPrice = (count, tax) => {
+//     return count * (100 + 200) + tax;
+// }
+
+// let getPrice = (count, tax) => count * (100 + 200) + tax;
+
+// let getPrice = (count, tax) => {
+//     let cost = count * (100 + 200);
+//     let total = cos + tax
+//     return total;
+// };
+
+//-------------------------------------------
+/*
+    why/where we need arrow-function ?
+
+    1. for compact function-arg
+    2. to capture 'this'
+
+*/
+//-------------------------------------------
+
+// 1. for compact function-arg
+
+// let nums = [1, 3, 5, 7, 9, 2, 4, 6, 8, 10];
+// // nums.sort(function (a, b) { return a - b });
+// // or
+// nums.sort((a, b) => a - b);
+
+//-------------------------------------------
+
+// 2. to capture 'this'
+
+// let trainer = {
+//     name: 'nag',
+//     doTeach: function () {
+//         console.log(this.name + " teaching .js");
+//         let askQues = (q) => {
+//             console.log(this.name + " answering " + q);
 //         }
+//         console.log('teaching end..');
+//         return askQues;
 //     }
 // };
 
-// let ids = [...idMaker];
-// let [id1, id2, id3] = idMaker;
+// let askQues = trainer.doTeach();
+// // askQues.call(trainer, 'Q1')
+// askQues('Q1')
 
+// let newTnr = { name: 'Praveen' }
+// // askQues.call(newTnr, 'Q2')
+// askQues('Q2');
 
-//----------------------------------------------------------------------
-//for...of loop
-//----------------------------------------------------------------------
+//-------------------------------------------
 
-// for (let id of idMaker) {
-//     console.log(id);
+// Quiz
+
+// function func() {
+//     console.log(this);
+// }
+// func();
+
+// let arrowFunc = () => {
+//     console.log(this);
+// }
+// arrowFunc();
+
+//--------------------------------------------------
+
+// let inv={
+//     num:123,
+//     process:function(){
+//         console.log('INV-'+this.num+" processed");
+//     }
 // }
 
-//----------------------------------------------------------------------
+// let inv = {
+//     num: 123,
+//     process: () => {
+//         console.log('INV-' + this.num + " processed");
+//     }
+// }
+
+// let inv={
+//     num:123,
+//     process:function(){
+//         console.log('INV-'+this.num+" processed partially");
+//         let complete=function(){
+//             console.log('INV-'+this.num+" processed partcompletlyially");
+//         }
+//         return complete;
+//     }
+// }
+
+// let inv = {
+//     num: 123,
+//     process: function () {
+//         console.log('INV-' + this.num + " processed partially");
+//         let complete = () => {
+//             console.log('INV-' + this.num + " processed partcompletlyially");
+//         }
+//         return complete;
+//     }
+// }
+
+// let complete = inv.process();
+// complete();
 
 
+//-------------------------------------------
 
+// function Person(name, age) {
+//     this.name = name;
+//     this.age = age;
+
+//     // let self=this;
+//     // let incAge = function () {
+//     //     self.age++;
+//     //     console.log(self.name + "->" + self.age);
+//     // }
+//     // setInterval(incAge, 1000);
+
+//     // or
+
+//     let incAge = () => {
+//         this.age++;
+//         console.log(this.name + "->" + this.age);
+//     }
+//     setInterval(incAge, 1000);
+// }
+
+// new Person('Ria', 3);
+
+//---------------------------------------------------
 

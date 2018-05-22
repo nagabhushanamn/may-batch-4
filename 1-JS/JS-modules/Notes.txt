@@ -1,0 +1,67 @@
+
+
+.js-dev, without module-standards & module-loader
+
+    => global-naming collisions
+    => loading dependency modules in order is difficult
+
+-------------------------------------------------------
+
+
+from third-parties, we got some module standard & loaders
+
+ => AMD ( Async Module Definition ) spec
+
+        - define()
+        - require()
+
+        loader : e.g Require.js
+
+ => commonJS 
+ => UMD
+ ........
+
+-------------------------------------------------------
+
+=> commonJS  - module -standard
+
+    -> every .js-file is module
+    -> all var & function in .js-file are private 
+    -> to abstract/export any member to other modules , use 'module.exports' object
+    -> to require/import any module , use 'require()'
+    -> can group related modules into packages with description file 'package.json' 
+
+    imp-note:
+
+    Node.js runtime, already implememnted this as default module standard
+
+-------------------------------------------------------
+
+
+NPM ( Node Package Manager )
+----------------------------
+
+    -> cli tool, runs on Node.js
+
+    why we need ?
+
+    -> to publish/install javascript packages from central-repositiory
+    -> to manage application build-cycles
+
+-------------------------------------------------------
+
+
+FROM ECMASCRIPT COMMUNITY , IN ES6
+
+ES modules
+-------------
+
+
+    -> every .js-file is module
+    -> all var & function in .js-file are private 
+    -> to abstract/export any member to other modules , use 'export' keyword
+    -> to require/import any module , use 'import' keyword
+    -> can group related modules into packages with description file 'package.json' 
+
+
+

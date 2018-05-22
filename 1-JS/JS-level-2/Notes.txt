@@ -1,0 +1,18 @@
+
+
+ES6
+-------
+
+New syntax
+
+    - let & const keywords with block-scope
+    - function wuth default & rest params
+    - string-interpolation
+    - New OO with class-syntax
+    - obj-literal enhancements
+    - destructuring
+    - spread operator
+    - arrow-function
+
+
+New APIs
