@@ -1,0 +1,92 @@
+
+
+
+what .js-language can do with HTML-page in browser-envi?
+
+
+using browser provided web-APIs,
+JavaScript-lang can bring any dynamic activity/data to web-page
+
+browser-APIs :  ==> are based on 'w3c' recommendations
+they are implemented & abstracted as JavaScript objects & functions
+
+
+browser-APIs  :
+    ==> DOM, XHR/fetch,Timer,..
+
+using DOM API
+--------------
+ -> can create,retreive,update,delete HTML elements
+ -> can change element's inner text/html content 
+ -> can change element's attributes/properties
+ -> can change element's styles ( css )
+ -> can validate form-fields 
+ -> can create rich UI-components
+ .........
+
+using XHR/fetch api
+---------------------
+-> can communicate with server-side programs async ( AJAX )
+
+using Timer API
+-----------------
+-> can execute any action on timeout/time-interval
+
+HTML-5 : APIs
+-----------------
+
+ref : https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5
+
+
+//-------------------------------------------------
+
+server-side page techonologies
+
+    -> .jsp + JSF , PHP , ASP , etc....
+
+    limitations with server-side page techonologies
+
+        => on every req, server need to re-construct same UI-layout with new content, keeping client state
+        => on every req, need to tranfer heavy content from server, leads increasing n/w bandwidth
+        => on every resp, broswer need to re-load current page
+
+
+
+problems with plain-js ( your-code ) with browser apis
+------------------------------------------------------
+
+-> browser compatability issues
+-> memory issues ( i.e cleaning un-used DOM elements)
+-> performance issues ( i.e DOM changes should be minimal)
+-> data-binding is manual
+-> too much code for simple operations
+-> code organization is too difficult
+
+
+ soln : using third-party's JavaScript lib & F.Ws
+
+
+ 1. jQuery ( DOM utility lib )
+
+ MVC & MVVM based js lib & F.Ws
+
+ 2. Knockout
+ 3. Backbone
+ 4. Emberjs
+ 5. AngularJS from google-team
+ 6. DOJO
+ 7. EXTJS
+ 8. YUI
+ .............
+
+ w3c => web-component / custom html-element spec
+
+component-based arch
+
+ 1. React  from facebook ( our focus )
+ 2. Angular from google-team
+ 3. Aurelia
+ 4. Vue
+ .......
+
+
