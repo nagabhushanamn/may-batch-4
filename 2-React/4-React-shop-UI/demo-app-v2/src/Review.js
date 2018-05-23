@@ -1,5 +1,6 @@
 import React from 'react';
 import 'font-awesome/css/font-awesome.css';
+import PropTypes from 'prop-types';
 
 // way-1 : class-syntax
 
@@ -42,6 +43,7 @@ function renderStars(n) {
     }
     return stars;
 }
+
 function Review(props) {
     let { review } = props;
     return (
@@ -58,5 +60,8 @@ function Review(props) {
         </div>
     );
 }
+Review.propTypes = {
+    review: PropTypes.object.isRequired
+};
 
 export default Review

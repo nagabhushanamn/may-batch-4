@@ -5,12 +5,12 @@ class ViewCart extends Component {
         let { cart } = this.props;
         let keys = Object.keys(cart);
         this.total_amount = 0;
-        return keys.map((key) => {
+        return keys.map((key,idx) => {
             let line = cart[key];
             let item = line.item;
             this.total_amount += item.price * line.qty;
             return (
-                <tr>
+                <tr key={idx}>
                     <td>{item.code}</td>
                     <td>{item.name}</td>
                     <td>&#8377;{item.price}</td>

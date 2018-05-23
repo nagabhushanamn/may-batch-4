@@ -3,6 +3,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import Product from './Product';
 import ViewCart from './ViewCart';
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+import Home from './Home';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -47,24 +54,35 @@ class App extends Component {
     return products.map((product, idx) => {
       return <Product onBuy={(item) => { this.addToCart(item) }} product={product} key={idx} />;
     });
+
   }
   render() {
     let { title } = this.props;
-    let { cart } = this.state;
+    let { cart, isCartOpen } = this.state;
     return (
-      <div className="container">
-        <nav className="navbar navbar-light bg-primary">
-          <a className="navbar-brand" href="/#">{title}</a>
-        </nav>
-        <hr />
-        {Object.keys(cart).length} item(s) in cart
-        <hr />
-        <ViewCart cart={cart} />
-        <hr />
-        <div className="list-group">
-          {this.renderProducts()}
+      <Router>
+        <div className="container">
+          <nav className="navbar navbar-light bg-primary">
+            <Link className="navbar-brand" to="/">{title}</Link>
+          </nav>
+          <hr />
+          {Object.keys(cart).length} item(s) in cart |
+          <Link to="/products">View products</Link>
+          <Link className="pull-right" to="/cart">View cart</Link>
+          <hr />
+
+          <Route exact={true} path="/" component={Home} />
+          <Route path="/cart" render={() => <ViewCart cart={cart} />} />
+          <Route path="/products" render={() => {
+            return (
+              <div className="list-group">
+                {this.renderProducts()}
+              </div>
+            )
+          }} />
+
         </div>
-      </div>
+      </Router>
     );
   }
 }
