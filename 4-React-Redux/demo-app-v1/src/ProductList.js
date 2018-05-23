@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Product from './Product';
+import store from './store';
+import { loadProducts } from './actions/products';
 
 class ProductList extends Component {
     constructor(props) {
@@ -9,12 +11,14 @@ class ProductList extends Component {
         }
     }
     componentDidMount() {
-        let apiUrl = 'http://0.0.0.0:8080/api/products';
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(products => {
-                this.setState({ products });
-            });
+        store.subscribe(() => {
+            console.log('ProductList :: subscribe()');
+            let products = store.getState().products;
+            this.setState({ products });
+        });
+        setTimeout(() => {
+            store.dispatch(loadProducts());
+        }, 2000);
     }
     renderProducts() {
         let { products } = this.state;
@@ -23,7 +27,7 @@ class ProductList extends Component {
         });
 
     }
-    componentDidCatch(err){
+    componentDidCatch(err) {
     }
     render() {
         return (

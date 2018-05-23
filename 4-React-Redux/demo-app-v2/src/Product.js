@@ -3,52 +3,39 @@ import classNames from 'classnames';
 import Review from './Review';
 import ReviewForm from './ReviewForm';
 
+import { loadReviews, addNewReview } from './actions/reviews';
+import { buy } from './actions/cart';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+
 class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentTab: 1,
-            reviews: []
         }
     }
     handleNewReview(review) {
-        let { product } = this.props;
-        let apiUrl = `http://localhost:8080/api/products/${product.id}/reviews`;
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(review)
-        })
-            .then(response => response.json())
-            .then(review => {
-                let { reviews } = this.state;
-                reviews = reviews.concat(review);
-                this.setState({ reviews });
-            });
-
+        let { product, actions } = this.props;
+        actions.addNewReview(product.id, review);
     }
     changeTab(tab) {
         this.setState({ currentTab: tab }, () => {
             if (tab === 3) {
-                let { product } = this.props;
-                let apiUrl = `http://localhost:8080/api/products/${product.id}/reviews`;
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(reviews => {
-                        reviews = reviews || [];
-                        this.setState({ reviews });
-                    });
+                let { product, actions } = this.props;
+                actions.loadReviews(product.id);
             }
         });
     }
     renderBuyBtn(product) {
+        let { actions } = this.props;
         if (true)
-            return <button onClick={() => { }} className="btn btn-primary btn-sm">buy</button>
+            return <button onClick={() => { actions.buy(product, 1) }} className="btn btn-primary btn-sm">buy</button>
         else
             return null;
     }
     renderReviews() {
-        let { reviews } = this.state;
+        let { reviews } = this.props;
         return reviews.map((review, idx) => {
             return <Review review={review} key={idx} />
         });
@@ -112,4 +99,16 @@ class Product extends Component {
     }
 }
 
-export default Product;
+
+function mapStateToProps(state, props) {
+    return {
+        reviews: state.reviews[props.product.id] || []
+    }
+}
+function mapDispatchToProps(dispatch) {
+    let actions = { loadReviews, addNewReview, buy }
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

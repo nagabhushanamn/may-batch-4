@@ -10,9 +10,10 @@ import {
 import Home from './Home';
 import ProductList from './ProductList';
 
+import store from './store';
 
 class App extends Component {
-  
+
   constructor(props) {
     super(props);
     //state initialization
@@ -20,21 +21,12 @@ class App extends Component {
       cart: {}, // {"111":{item,qty}}
     }
   }
-
-  addToCart(item) {
-    let { cart } = this.state;
-    let code = item.code;
-    let cartLine;
-    if (!cart[code]) {
-      cartLine = { item, qty: 1 }
-    } else {
-      cartLine = cart[code];
-      cartLine = { item, qty: cartLine.qty + 1 }
-    }
-    cart = Object.assign({}, cart, { [code]: cartLine })
-    this.setState({ cart });
+  componentDidMount() {
+    store.subscribe(() => {
+      let cart = store.getState().cart;
+      this.setState({ cart });
+    });
   }
-  
   render() {
     let { title } = this.props;
     let { cart } = this.state;

@@ -1,0 +1,30 @@
+
+
+// redux-pattern flow
+//---------------------------
+
+--------------------------------------------------------
+ex1=>counter-ui
+
+state => {count:100}
+Action(s)
+
+        - INCREMENT
+        - DECREMEMNT
+
+--------------------------------------------------------
+ex-2=>shop-ui
+
+state =>  products,reviews,cart,...........
+
+Action(s)
+
+        - LOAD_PRODUCTS
+        - LOAD_REVIEWS
+        - ADD_NEW_REVIEW
+        - BUY
+        - CHECKOUT
+        
+               
+
+

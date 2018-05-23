@@ -10,34 +10,12 @@ import {
 import Home from './Home';
 import ProductList from './ProductList';
 
+import { connect } from 'react-redux';
 
 class App extends Component {
-  
-  constructor(props) {
-    super(props);
-    //state initialization
-    this.state = {
-      cart: {}, // {"111":{item,qty}}
-    }
-  }
 
-  addToCart(item) {
-    let { cart } = this.state;
-    let code = item.code;
-    let cartLine;
-    if (!cart[code]) {
-      cartLine = { item, qty: 1 }
-    } else {
-      cartLine = cart[code];
-      cartLine = { item, qty: cartLine.qty + 1 }
-    }
-    cart = Object.assign({}, cart, { [code]: cartLine })
-    this.setState({ cart });
-  }
-  
   render() {
-    let { title } = this.props;
-    let { cart } = this.state;
+    let { title, cart } = this.props;
     return (
       <Router>
         <div className="container">
@@ -58,4 +36,10 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    cart: state.cart
+  }
+}
+
+export default connect(mapStateToProps, null)(App);

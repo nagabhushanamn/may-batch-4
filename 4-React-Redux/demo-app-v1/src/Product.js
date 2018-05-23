@@ -3,6 +3,10 @@ import classNames from 'classnames';
 import Review from './Review';
 import ReviewForm from './ReviewForm';
 
+import store from './store';
+import { loadReviews, addNewReview } from './actions/reviews';
+import { buy } from './actions/cart';
+
 class Product extends Component {
     constructor(props) {
         super(props);
@@ -11,39 +15,29 @@ class Product extends Component {
             reviews: []
         }
     }
+    componentDidMount() {
+        let { product } = this.props;
+        store.subscribe(() => {
+            console.log('Product:: subscribe()');
+            let reviews = store.getState().reviews[product.id] || [];
+            this.setState({ reviews });
+        });
+    }
     handleNewReview(review) {
         let { product } = this.props;
-        let apiUrl = `http://localhost:8080/api/products/${product.id}/reviews`;
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(review)
-        })
-            .then(response => response.json())
-            .then(review => {
-                let { reviews } = this.state;
-                reviews = reviews.concat(review);
-                this.setState({ reviews });
-            });
-
+        store.dispatch(addNewReview(product.id, review));
     }
     changeTab(tab) {
         this.setState({ currentTab: tab }, () => {
             if (tab === 3) {
                 let { product } = this.props;
-                let apiUrl = `http://localhost:8080/api/products/${product.id}/reviews`;
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(reviews => {
-                        reviews = reviews || [];
-                        this.setState({ reviews });
-                    });
+                store.dispatch(loadReviews(product.id));
             }
         });
     }
     renderBuyBtn(product) {
         if (true)
-            return <button onClick={() => { }} className="btn btn-primary btn-sm">buy</button>
+            return <button onClick={() => { store.dispatch(buy(product, 1)) }} className="btn btn-primary btn-sm">buy</button>
         else
             return null;
     }
