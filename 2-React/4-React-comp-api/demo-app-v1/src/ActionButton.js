@@ -7,18 +7,19 @@ class ActionButton extends Component {
         super(props)
         console.log('ActionButton :: constructor()');
         this.state = {
-            count: 0
+            count: 1
         };
     }
     handleBtnClick() {
         let { count } = this.state;
+        let { value } = this.props;
         this.setState({ count: count + 1 }, () => {
             setTimeout(() => {
                 let { onAction } = this.props;
                 if (onAction) {
-                    onAction();
+                    onAction(value * count);
                 }
-            }, 1000)
+            }, 0)
         });
 
     }
@@ -26,11 +27,12 @@ class ActionButton extends Component {
         console.log('ActionButton :: render()');
         let { value } = this.props;
         let { count } = this.state;
+        let className = `btn ${value > 0 ? 'btn-success' : 'btn-warning'}`;
         return (
             <div className="action-button">
                 <div className="card">
                     <div className="card-body">
-                        <button className="btn btn-primary" onClick={() => { this.handleBtnClick() }}>
+                        <button className={className} onClick={() => { this.handleBtnClick() }}>
                             {value} : <span className="badge badge-danger">{count}</span>
                         </button>
                     </div>
@@ -39,6 +41,7 @@ class ActionButton extends Component {
         );
     }
 }
+
 ActionButton.propTypes = {
     value: PropTypes.number,
     onAction: PropTypes.func
